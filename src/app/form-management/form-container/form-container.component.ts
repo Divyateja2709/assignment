@@ -29,8 +29,6 @@ export class FormContainerComponent {
   ngOnInit() {
     this.http.get<FormlyFieldConfig[]>('/assets/dynamic-form.json').subscribe((jsonSchema: any) => {
       const formlyConfig = this.formlyJsonSchema.toFieldConfig(jsonSchema);
-      formlyConfig.fieldGroupClassName = 'display-flex';
-      console.log('formlyConfig', formlyConfig);
       this.fields = formlyConfig.fieldGroup;
     });
   }

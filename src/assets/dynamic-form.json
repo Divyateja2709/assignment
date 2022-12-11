@@ -4,15 +4,20 @@
     "properties": {
       "firstname": {
         "type": "string",
-        "title": "Firstname"
+        "title": "Firstname",
+        "widget":{
+          "formlyConfig":{
+            "className":"flex-3"
+          }
+        }
       },
       "nationId": {
         "type": "number",
         "title": "Nation",
-        "className": "flex-3",
         "widget": {
           "formlyConfig": {
             "type": "select",
+            "className":"flex-3",
             "templateOptions": {
               "options": [
                 {
@@ -30,7 +35,12 @@
       },
       "credit_card": {
         "type": "number",
-        "title": "Credit card"
+        "title": "Credit card",
+        "widget":{
+          "formlyConfig":{
+            "className":"flex-3"
+          }
+        }
       }
     },
     "dependencies": {
