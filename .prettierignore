@@ -1,0 +1,115 @@
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Package Manager
+package.json
+package-lock.json
+yarn.lock
+
+# Angular-related
+/dist
+/coverage
+**/assets/**/*
+5. Add .prettierrc.json
+
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "bracketSameLine": true,
+  "bracketSpacing": true,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "arrowParens": "avoid",
+  "trailingComma": "none",
+  "printWidth": 160,
+  "semi": true,
+  "overrides": [
+    {
+      "files": [
+        "*.json",
+        ".babelrc"
+      ],
+      "options": {
+        "parser": "json-stringify"
+      }
+    },
+    {
+      "files": [
+        "*.jsonc",
+        "tsconfig*.json"
+      ],
+      "options": {
+        "parser": "json"
+      }
+    },
+    {
+      "files": [
+        "*.js",
+        "*.cjs",
+        "*.mjs"
+      ],
+      "options": {
+        "parser": "babel"
+      }
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "options": {
+        "parser": "typescript"
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "options": {
+        "parser": "html",
+        "attributeGroups": [
+          "$CLASS",
+          "$ID",
+          "$ANGULAR_ELEMENT_REF",
+          "$ANGULAR_STRUCTURAL_DIRECTIVE",
+          "$ANGULAR_ANIMATION",
+          "$ANGULAR_ANIMATION_INPUT",
+          "$ANGULAR_TWO_WAY_BINDING",
+          "$ANGULAR_INPUT",
+          "$ANGULAR_OUTPUT"
+        ]
+      }
+    }
+  ]
+}
+prettier-plugin-organize-attributes can organize the HTML attributes autmatically with Prettier, like attributeGroups block shown.
+
+6. Try it manually
+
+// Only show [warn] but won't format 
+npx prettier --check /src/
+// Format immediately
+npx prettier --write /src/
+Note:
+
+npm set-script is only available in npm version > 7.x.
+Use nvm to change npm version
+// list node version
+nvm list
+/* Switch to use the specified version.
+ * Optionally use "latest", "lts", or "newest".
+ */
+nvm use [version] [arch]
