@@ -7,6 +7,8 @@ import { FormContainerComponent } from './form-container/form-container.componen
 import { MaterialModule } from '../material/material.module';
 import { ObjectTypeComponent } from './object.type';
 import { ArrayTypeComponent } from './array.type';
+import { FormlyFieldPhoneNumber } from './custom-fields/phone-number.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 export function minItemsValidationMessage(error: any, field: FormlyFieldConfig) {
   return `should NOT have fewer than ${field.props.minItems} items`;
@@ -55,6 +57,7 @@ export function typeValidationMessage({ schemaType }: any) {
 @NgModule({
   imports: [
     CommonModule,
+    NgxMaskModule.forRoot(),
     ReactiveFormsModule,
     FormlyModule.forRoot({
       validationMessages: [
@@ -74,13 +77,58 @@ export function typeValidationMessage({ schemaType }: any) {
       ],
       types: [
         { name: 'array', component: ArrayTypeComponent },
-        { name: 'object', component: ObjectTypeComponent }
+        { name: 'object', component: ObjectTypeComponent },
+        {
+          name: 'phoneNumber',
+          component: FormlyFieldPhoneNumber,
+          wrappers: ['form-field'],
+          defaultOptions: {
+            fieldGroup: [
+              { type: 'input', key: 'countryCode' },
+              { type: 'input', key: 'phoneNumber' }
+            ]
+          }
+        }
+        // {
+        //   name: 'phoneNumber',
+        //   extends: 'formly-group',
+        //   wrappers: ['form-field'],
+        //   defaultOptions: {
+        //     fieldGroupClassName: 'row',
+        //     fieldGroup: [
+        //       {
+        //         type: 'select',
+        //         key: 'countryCode',
+        //         className: 'col-2',
+        //         templateOptions: {
+        //           required: true,
+        //           options: [
+        //             { label: 'India +91', value: '+91' },
+        //             { label: 'Hong Kong +852', value: '+852' },
+        //             { label: 'USA +1', value: '+1' },
+        //           ]
+        //         },
+        //         validation: {
+        //           messages: {
+        //             required: 'required',
+        //           },
+        //         },
+        //       },
+        //       {
+        //         type: 'input',
+        //         key: 'phoneNumber',
+        //         className: 'col-4',
+        //         templateOptions: { required: true },
+        //       },
+        //     ]
+        //   }
+        // },
       ]
     }),
     FormlyMaterialModule,
     MaterialModule
   ],
   exports: [FormContainerComponent],
-  declarations: [FormContainerComponent, ArrayTypeComponent, ObjectTypeComponent]
+  declarations: [FormContainerComponent, ArrayTypeComponent, ObjectTypeComponent, FormlyFieldPhoneNumber]
 })
 export class FormManagementModule {}

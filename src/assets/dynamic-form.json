@@ -33,6 +33,15 @@
           }
         }
       },
+      "phoneNumber":{
+        "type":"phoneNumber",
+        "title":"Phone Number",
+        "widget":{
+          "formlyConfig":{
+            "className":"flex-3"
+          }
+        }
+      },
       "credit_card": {
         "type": "number",
         "title": "Credit card",

@@ -20,7 +20,11 @@ export class FormContainerComponent {
     age: 34,
     nationId: 1,
     cityId: 1,
-    ip: null
+    ip: null,
+    phoneNumber: {
+      countryCode: '+91',
+      phoneNumber: '9870111421'
+    }
   };
   fields: FormlyFieldConfig[] = [];
 
@@ -35,5 +39,6 @@ export class FormContainerComponent {
 
   onSubmit({ valid, value }) {
     console.log(value);
+    this.model = value;
   }
 }
