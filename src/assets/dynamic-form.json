@@ -12,21 +12,33 @@
         }
       },
       "nationId": {
-        "type": "number",
+        "type": "ng-select-autocomplete",
         "title": "Nation",
         "widget": {
           "formlyConfig": {
-            "type": "select",
+            "type": "ng-select-autocomplete",
             "className":"flex-3",
             "templateOptions": {
               "options": [
                 {
                   "value": null,
-                  "label": "--"
+                  "label": " -- "
                 },
                 {
                   "value": 1,
                   "label": "Italy"
+                },
+                {
+                  "value": 2,
+                  "label": "Germany"
+                },
+                {
+                  "value": 3,
+                  "label": "U.S."
+                },
+                {
+                  "value": 4,
+                  "label": "India"
                 }
               ]
             }

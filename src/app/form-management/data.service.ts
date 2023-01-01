@@ -24,6 +24,10 @@ export class DataService {
       {
         value: 3,
         label: 'U.S.'
+      },
+      {
+        value: 4,
+        label: 'India'
       }
     ]);
   }
