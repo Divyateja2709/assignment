@@ -1,0 +1,11 @@
+{
+    "type": "object",
+    "properties": {
+      "yourField": {
+        "type": "string",
+        "title": "Custom Input"
+      }
+    },
+    "required": ["yourField"]
+  }
+  

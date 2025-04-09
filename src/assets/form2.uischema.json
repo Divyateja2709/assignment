@@ -1,0 +1,9 @@
+{
+    "type": "Group",
+    "label": "Subscription",
+    "elements": [
+      { "type": "Control", "scope": "#/properties/email" },
+      { "type": "Control", "scope": "#/properties/subscribe" }
+    ]
+  }
+  

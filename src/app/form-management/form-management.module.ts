@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule, FormControl, ValidationErrors } from '@angular/forms';
-import { FormlyModule, FormlyFieldConfig, FORMLY_CONFIG } from '@ngx-formly/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormlyModule, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
+import { FormlySelectModule } from '@ngx-formly/core/select';
+import { NgxMaskModule } from 'ngx-mask';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 import { FormContainerComponent } from './form-container/form-container.component';
-import { MaterialModule } from '../material/material.module';
 import { ObjectTypeComponent } from './object.type';
 import { ArrayTypeComponent } from './array.type';
 import { FormlyFieldPhoneNumber } from './custom-fields/phone-number.component';
-import { NgxMaskModule } from 'ngx-mask';
 import { FormlyFieldCountryCode } from './custom-fields/country-code.component';
 import { FormlyFieldAlternatePhoneNumber } from './custom-fields/alternate-phone-number.component';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { NgSelectFormlyComponent } from './ng-select.type';
-import { FormlySelectModule } from '@ngx-formly/core/select';
+import { MaterialModule } from '../material/material.module';
+import { CustomFormlyRenderer } from './custom-formly-renderer';
+import { CustomInputRendererComponent } from '../custom-fields/custom-input-renderer.component'; // ✅ Import
 
 export function minItemsValidationMessage(error: any, field: FormlyFieldConfig) {
   return `should NOT have fewer than ${field.props.minItems} items`;
@@ -56,7 +59,7 @@ export function constValidationMessage(error: any, field: FormlyFieldConfig) {
 }
 
 export function typeValidationMessage({ schemaType }: any) {
-  return `should be "${schemaType[0]}".`;
+  return `should be "${schemaType[0]}"`;
 }
 
 @NgModule({
@@ -67,7 +70,9 @@ export function typeValidationMessage({ schemaType }: any) {
     FormlyFieldPhoneNumber,
     FormlyFieldCountryCode,
     FormlyFieldAlternatePhoneNumber,
-    NgSelectFormlyComponent
+    NgSelectFormlyComponent,
+    CustomFormlyRenderer,
+    CustomInputRendererComponent // ✅ Declare
   ],
   imports: [
     CommonModule,
@@ -106,56 +111,19 @@ export function typeValidationMessage({ schemaType }: any) {
               { type: 'input', key: 'phoneNumber' }
             ]
           }
+        },
+        {
+          name: 'custom-renderer',
+          component: CustomFormlyRenderer
         }
-        // {
-        //   name: 'countryCode',
-        //   component: FormlyFieldCountryCode,
-        //   wrappers: ['form-field']
-        // },
-        // {
-        //   name: 'phoneNumber',
-        //   component: FormlyFieldAlternatePhoneNumber,
-        //   wrappers: ['form-field']
-        // },
-        // {
-        //   name: 'phoneNumber',
-        //   extends: 'formly-group',
-        //   wrappers: ['form-field'],
-        //   defaultOptions: {
-        //     fieldGroupClassName: 'display-flex',
-        //     fieldGroup: [
-        //       {
-        //         type: 'select',
-        //         key: 'countryCode',
-        //         className: 'flex-2',
-        //         templateOptions: {
-        //           required: true,
-        //           options: [
-        //             { label: 'India +91', value: '+91' },
-        //             { label: 'Hong Kong +852', value: '+852' },
-        //             { label: 'USA +1', value: '+1' }
-        //           ]
-        //         },
-        //         validation: {
-        //           messages: {
-        //             required: 'required'
-        //           }
-        //         }
-        //       },
-        //       {
-        //         type: 'input',
-        //         key: 'phoneNumber',
-        //         className: 'flex-2',
-        //         templateOptions: { required: true }
-        //       }
-        //     ]
-        //   }
-        // }
       ]
     }),
     FormlyMaterialModule,
     MaterialModule
   ],
-  exports: [FormContainerComponent]
+  exports: [
+    FormContainerComponent,
+    CustomInputRendererComponent // ✅ Export
+  ]
 })
 export class FormManagementModule {}
