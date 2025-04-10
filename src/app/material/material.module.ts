@@ -42,6 +42,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -57,6 +60,7 @@ import { MatTableModule } from '@angular/material/table';
     MatSlideToggleModule,
     MatMenuModule,
     MatSidenavModule,
+
     MatToolbarModule,
     MatCardModule,
     MatDividerModule,
@@ -95,6 +99,7 @@ import { MatTableModule } from '@angular/material/table';
     MatMenuModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatNativeDateModule,
     MatCardModule,
     MatDividerModule,
     MatExpansionModule,

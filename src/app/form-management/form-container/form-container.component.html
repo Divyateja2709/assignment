@@ -1,11 +1,13 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit(form)" class="space-y-4">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+  <!-- Formly Form -->
   <formly-form [model]="model" [fields]="fields" [form]="form"></formly-form>
 
+  <!-- Action Buttons -->
   <div class="flex justify-between mt-4">
-    <button type="reset" mat-raised-button color="warn">Clear</button>
+    <button type="reset" mat-raised-button color="warn" (click)="onReset()">Clear</button>
     <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">Submit</button>
   </div>
 </form>
 
 <!-- Optional: Debugging Output -->
-<pre class="mt-4 bg-gray-100 p-2 rounded text-sm shadow">{{ model | json }}</pre>
+<pre *ngIf="debug" class="mt-4 bg-gray-100 p-2 rounded text-sm shadow">{{ model | json }}</pre>

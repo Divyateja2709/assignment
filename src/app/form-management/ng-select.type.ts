@@ -6,11 +6,29 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
   template: `
     <ng-select
       [items]="to.options | formlySelectOptions : field | async"
-      [placeholder]="to.label"
+      [placeholder]="to.placeholder || to.label || ''"
       [bindValue]="to.bindValue || 'value'"
+      [bindLabel]="to.bindLabel || 'label'"
       [formControl]="formControl"
-      [class.is-invalid]="showError">
+      [class.is-invalid]="showError"
+      [multiple]="to.multiple || false"
+      [clearable]="to.clearable || true">
     </ng-select>
-  `
+  `,
+  styles: [
+    `
+      .is-invalid {
+        border: 1px solid red;
+      }
+    `
+  ]
 })
-export class NgSelectFormlyComponent extends FieldType<FieldTypeConfig> {}
+export class NgSelectFormlyComponent extends FieldType<FieldTypeConfig> {
+  /**
+   * A shortcut to access the `props` object in Formly fields,
+   * which contains additional options passed to the field.
+   */
+  get to() {
+    return this.props || {};
+  }
+}

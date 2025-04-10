@@ -1,17 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { FieldTypeConfig } from '@ngx-formly/core';
-import { FieldType } from '@ngx-formly/material';
+import { Component } from '@angular/core';
+import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 
 @Component({
-  selector: 'formly-field-custom-input',
+  selector: 'formly-field-country-code',
   template: `
-    <!-- <mat-select [formControl]="formControl.get('countryCode')">
-      <mat-option value="+91">India +91</mat-option>
-      <mat-option value="+852">Hong Kong +852</mat-option>
-      <mat-option value="+1">USA +1</mat-option>
-    </mat-select> -->
-  `
+    <mat-form-field appearance="fill" class="w-100">
+      <!-- Label for the dropdown -->
+      <mat-label>{{ props.label || 'Country Code' }}</mat-label>
+
+      <!-- Country Code Selector -->
+      <mat-select [formControl]="formControl" [formlyAttributes]="field">
+        <mat-option *ngFor="let option of props.options" [value]="option.value">
+          {{ option.label }}
+        </mat-option>
+      </mat-select>
+
+      <!-- Error State Handling -->
+      <mat-error *ngIf="showError">
+        <formly-validation-message [field]="field"></formly-validation-message>
+      </mat-error>
+    </mat-form-field>
+  `,
+  styles: [
+    `
+      .w-100 {
+        width: 100%;
+      }
+    `
+  ]
 })
-export class FormlyFieldCountryCode extends FieldType<FieldTypeConfig> implements OnInit {
-  ngOnInit(): void {}
+export class FormlyFieldCountryCode extends FieldType<FieldTypeConfig> {
+  /**
+   * A shortcut to access the `props` object in Formly fields,
+   * which contains additional options passed to the field.
+   */
+  get props() {
+    return this.field.props || {};
+  }
 }

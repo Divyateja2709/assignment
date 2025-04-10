@@ -1,111 +1,36 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormControl, ValidationErrors } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { DataService } from '../data.service';
-import { switchMap, startWith, tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 
 @Component({
   selector: 'app-form-container',
   templateUrl: './form-container.component.html',
-  styleUrls: ['./form-container.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./form-container.component.scss']
 })
 export class FormContainerComponent {
-  form = new FormGroup({});
-  model = {
-    id: 123123,
-    firstname: 'Juri',
-    age: 34,
-    nationId: 1,
-    cityId: 1,
-    ip: null
-  };
-  fields: FormlyFieldConfig[] = [
-    {
-      key: 'id'
-    },
-    {
-      key: 'firstname',
-      type: 'input',
-      templateOptions: {
-        label: 'Firstname',
-        required: true
-      }
-    },
-    {
-      key: 'age',
-      type: 'input',
-      templateOptions: {
-        type: 'number',
-        label: 'Age',
-        min: 18
-      },
-      validation: {
-        messages: {
-          min: 'Sorry, you have to be older than 18'
-        }
-      }
-    },
-    {
-      key: 'nationId',
-      type: 'ng-select-autocomplete',
-      // type: 'select', // <select>
-      templateOptions: {
-        label: 'Nation',
-        options: this.dataService.getNations()
-      }
-    },
-    {
-      key: 'cityId',
-      type: 'select', // <select>
-      templateOptions: {
-        label: 'Cities',
-        options: []
-      },
-      expressionProperties: {
-        'templateOptions.disabled': model => !model.nationId,
-        'model.cityId': '!model.nationId ? null : model.cityId'
-      },
-      hideExpression: model => !model.nationId,
-      hooks: {
-        onInit: (field: FormlyFieldConfig) => {
-          field.templateOptions.options = field.form.get('nationId').valueChanges.pipe(
-            startWith(this.model.nationId),
-            switchMap(nationId => this.dataService.getCities(nationId))
-          );
-        }
-      }
-    },
-    {
-      key: 'ip',
-      type: 'input',
-      templateOptions: {
-        label: 'IP Address',
-        required: true
-      },
-      validators: {
-        // validation: ['ip']
-        ip2: {
-          expression: c => !c.value || /(\d{1,3}\.){3}\d{1,3}/.test(c.value),
-          message: (errorr, field: FormlyFieldConfig) => `"${field.formControl.value}" is not valid`
-        }
-      }
+  @Input() fields: FormlyFieldConfig[] = [];
+  @Input() model: any = {};
+  @Input() form: FormGroup = new FormGroup({});
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      console.log('Form submission', this.model);
+      // Handle form submission logic here (e.g., send data to an API)
+    } else {
+      this.markFormGroupTouched(this.form);
+      console.warn('Form is invalid. Please correct the errors.');
     }
-  ];
-
-  constructor(private dataService: DataService, private http: HttpClient, private formlyJsonSchema: FormlyJsonschema) {}
-
-  ngOnInit() {
-    // this.http.get<FormlyFieldConfig[]>('/assets/dynamic-form.json').subscribe((jsonSchema: any) => {
-    //   const formlyConfig = this.formlyJsonSchema.toFieldConfig(jsonSchema);
-    //   this.fields = formlyConfig.fieldGroup;
-    // });
   }
 
-  onSubmit({ valid, value }) {
-    console.log(value);
-    this.model = value;
+  // Helper method to mark all controls as touched
+  private markFormGroupTouched(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key);
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control); // Recursively mark nested controls
+      } else {
+        control?.markAsTouched();
+      }
+    });
   }
 }
